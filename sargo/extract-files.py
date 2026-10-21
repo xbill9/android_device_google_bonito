@@ -67,6 +67,12 @@ blob_fixups: blob_fixups_user_type = {
         .replace_needed('libavservices_minijail_vendor.so', 'libavservices_minijail.so'),
     'vendor/lib64/android.hardware.keymaster@4.1-impl.nos.so': blob_fixup()
         .add_needed('libcrypto_shim.so'),
+    (
+        'vendor/lib64/camera/components/com.qti.node.eisv2.so',
+        'vendor/lib64/camera/components/com.qti.node.eisv3.so',
+        'vendor/lib64/hw/camera.sdm710.so',
+    ): blob_fixup()
+        .replace_needed('libtinyxml2.so', 'libtinyxml2-v34.so'),
     'vendor/lib64/hw/com.qti.chi.override.so': blob_fixup()
         .replace_needed('android.hardware.power-V1-ndk_platform.so', 'android.hardware.power-V1-ndk.so'),
 }  # fmt: skip
