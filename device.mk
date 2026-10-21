@@ -219,10 +219,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.strongbox_keystore.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.strongbox_keystore.xml \
     frameworks/native/data/etc/android.software.ipsec_tunnels.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.ipsec_tunnels.xml \
 
-# powerstats HAL
-PRODUCT_PACKAGES += \
-    android.hardware.power.stats@1.0-service.pixel
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
 
@@ -339,11 +335,19 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/firmware/wlan/qca_cld/WCNSS_qcom_cfg.ini \
 
 PRODUCT_PACKAGES += \
-    hwcomposer.$(TARGET_CHIPSET) \
+    hwcomposer.qcom \
     android.hardware.graphics.composer@2.2-service \
     gralloc.$(TARGET_CHIPSET) \
     android.hardware.graphics.mapper@2.0-impl-qti-display \
     vendor.qti.hardware.display.allocator@1.0-service
+
+# /vendor/firmware_mnt mount point (23.2: soong mkdir module in hardware/qcom-caf/common)
+PRODUCT_PACKAGES += \
+    vendor_firmware_mnt_mountpoint
+
+# hwcomposer.qcom keeps its name on 23.2 (gralloc is still per-platform)
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.hardware.hwcomposer=qcom
 
 # Health HAL
 PRODUCT_PACKAGES += \
@@ -352,7 +356,7 @@ PRODUCT_PACKAGES += \
 
 # Storage health HAL
 PRODUCT_PACKAGES += \
-    android.hardware.health.storage@1.0-service
+    android.hardware.health.storage-service.default
 
 # Light HAL
 PRODUCT_PACKAGES += \
@@ -839,3 +843,15 @@ include hardware/google/pixel/citadel/citadel.mk
 
 # Pixel Logger
 include hardware/google/pixel/PixelLogger/PixelLogger.mk
+
+# 23.2: hardware/qcom/audio reads these soong variables instead of the
+# AUDIO_FEATURE_ENABLED_* make variables set in BoardConfig-common.mk / device-common.mk
+$(call soong_config_set,qtiaudio,feature_24bits_camcorder,true)
+$(call soong_config_set,qtiaudio,feature_a2dp_offload,true)
+$(call soong_config_set,qtiaudio,feature_cirrus_spkr_protection,true)
+$(call soong_config_set,qtiaudio,feature_flicker_sensor_input,true)
+$(call soong_config_set,qtiaudio,feature_maxx_audio,true)
+$(call soong_config_set,qtiaudio,feature_multi_voice_sessions,true)
+$(call soong_config_set,qtiaudio,feature_snd_monitor,true)
+$(call soong_config_set,qtiaudio,feature_sound_trigger,true)
+$(call soong_config_set,qtiaudio,feature_usb_tunnel,true)
