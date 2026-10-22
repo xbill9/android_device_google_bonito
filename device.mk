@@ -24,6 +24,7 @@ PRODUCT_SOONG_NAMESPACES += \
     hardware/google/pixel \
     hardware/google/pixel/health \
     hardware/google/pixel/pixelstats \
+    hardware/google/pixel/power-libperfmgr \
     hardware/google/pixel/thermal \
     hardware/qcom/audio \
     hardware/qcom/sdm845/display \
