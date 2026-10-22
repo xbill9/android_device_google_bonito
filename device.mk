@@ -22,6 +22,9 @@ PRODUCT_SOONG_NAMESPACES += \
     hardware/google/camera \
     hardware/google/interfaces \
     hardware/google/pixel \
+    hardware/google/pixel/health \
+    hardware/google/pixel/pixelstats \
+    hardware/google/pixel/thermal \
     hardware/qcom/audio \
     hardware/qcom/sdm845/display \
     hardware/qcom/sdm845/gps \
@@ -358,12 +361,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.health.storage-service.default
 
-# Light HAL
+# Light HAL: Android 17 has no HIDL lights; LineageOS's AIDL service drives
+# /sys/class/backlight/panel0-backlight and the notification LEDs.
 PRODUCT_PACKAGES += \
-    lights.qcom \
-    hardware.google.light@1.0-service
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.hardware.lights=qcom
+    android.hardware.light-service.lineage
 
 # Memtrack HAL
 PRODUCT_PACKAGES += \
@@ -632,10 +633,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
   logd.logpersistd.size=30
 endif
 
-# Dumpstate HAL
-PRODUCT_PACKAGES += \
-    android.hardware.dumpstate@1.1-service.bonito
-
 # Storage: for factory reset protection feature
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.frp.pst=/dev/block/bootdevice/by-name/frp
@@ -831,18 +828,20 @@ PRODUCT_PRODUCT_PROPERTIES += \
 PRODUCT_VENDOR_PROPERTIES += ro.soc.manufacturer=Qualcomm
 PRODUCT_VENDOR_PROPERTIES += ro.soc.model=SDM670
 
-include hardware/google/pixel/vibrator/drv2624/device.mk
+include device/google/bonito/vibrator/hal/drv2624/device.mk
 include hardware/google/pixel/mm/device_legacy.mk
-include device/google/gs-common/thermal/thermal_hal/device.mk
+# Thermal: the Pixel thermal HAL from hardware/google/pixel, as sunfish does on 24.0;
+# the SELinux policy is gs-common's thermal_hal policy, carried in this tree.
+PRODUCT_PACKAGES += \
+    android.hardware.thermal-service.pixel \
+    thermal_symlinks
+BOARD_SEPOLICY_DIRS += device/google/bonito/sepolicy/vendor/google/thermal_hal
 
 # Citadel
 include hardware/google/pixel/citadel/citadel.mk
 
 # power HAL
 -include hardware/google/pixel/power-libperfmgr/aidl/device.mk
-
-# Pixel Logger
-include hardware/google/pixel/PixelLogger/PixelLogger.mk
 
 # 23.2: hardware/qcom/audio reads these soong variables instead of the
 # AUDIO_FEATURE_ENABLED_* make variables set in BoardConfig-common.mk / device-common.mk

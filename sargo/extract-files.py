@@ -25,6 +25,7 @@ from extract_utils.main import (
 )
 
 namespace_imports = [
+    'device/google/bonito',
     'hardware/google/interfaces',
     'hardware/google/pixel',
     'hardware/qcom/sdm845',
@@ -73,6 +74,9 @@ blob_fixups: blob_fixups_user_type = {
         'vendor/lib64/hw/camera.sdm710.so',
     ): blob_fixup()
         .replace_needed('libtinyxml2.so', 'libtinyxml2-v34.so'),
+    'vendor/bin/hw/android.hardware.biometrics.fingerprint@2.1-service.fpc': blob_fixup()
+        .replace_needed('android.frameworks.stats@1.0.so', 'lineage.frameworks.stats@1.0.so')
+        .binary_regex_replace(b'_ZN7android10frameworks5stats', b'_ZN7lineage10frameworks5stats'),
     'vendor/lib64/hw/com.qti.chi.override.so': blob_fixup()
         .replace_needed('android.hardware.power-V1-ndk_platform.so', 'android.hardware.power-V1-ndk.so'),
 }  # fmt: skip
