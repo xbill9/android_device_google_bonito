@@ -79,6 +79,8 @@ blob_fixups: blob_fixups_user_type = {
         .binary_regex_replace(b'_ZN7android10frameworks5stats', b'_ZN7lineage10frameworks5stats'),
     'vendor/lib64/hw/com.qti.chi.override.so': blob_fixup()
         .replace_needed('android.hardware.power-V1-ndk_platform.so', 'android.hardware.power-V1-ndk.so'),
+    'system_ext/lib64/libsecureuisvc_jni.so': blob_fixup()
+        .add_needed('libgui_shim_secureui.so'),
 }  # fmt: skip
 
 extract_fns: extract_fns_user_type = {
