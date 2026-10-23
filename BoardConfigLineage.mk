@@ -13,6 +13,15 @@ TARGET_KERNEL_CONFIG := bonito_defconfig
 TARGET_KERNEL_LLVM_BINUTILS := false
 # 4.9 links LTO with GNU gold from CROSS_COMPILE; the 23.2 default adds LD=ld.lld, which overrides it
 KERNEL_CC := CC=clang
+# LineageOS 24 builds kernels with LLVM only and leaves KERNEL_CROSS_COMPILE unset. 4.9 predates
+# LLVM=1, so give it the GNU binutils and host clang that 23.2's kernel config passed.
+KERNEL_CROSS_COMPILE := \
+    CROSS_COMPILE=$(abspath .)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android- \
+    CROSS_COMPILE_ARM32=$(abspath .)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-4.9/bin/arm-linux-androideabi- \
+    HOSTCC=$(TARGET_KERNEL_CLANG_PATH)/bin/clang \
+    HOSTCXX=$(TARGET_KERNEL_CLANG_PATH)/bin/clang++ \
+    HOSTLD=$(TARGET_KERNEL_CLANG_PATH)/bin/ld.lld \
+    HOSTAR=$(TARGET_KERNEL_CLANG_PATH)/bin/llvm-ar
 TARGET_KERNEL_SOURCE := kernel/google/msm-4.9
 TARGET_NEEDS_DTBOIMAGE := true
 
