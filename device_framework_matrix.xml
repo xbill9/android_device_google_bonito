@@ -191,4 +191,31 @@
             <instance>slot1</instance>
         </interface>
     </hal>
+    <!-- Android 17 framework matrices list only the AIDL version; the framework still has a HIDL client. -->
+    <hal format="hidl" optional="true">
+        <name>android.hardware.bluetooth.audio</name>
+        <version>2.0</version>
+        <interface>
+            <name>IBluetoothAudioProvidersFactory</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <!-- Android 17 framework matrices list only the AIDL version; the framework still has a HIDL client. -->
+    <hal format="hidl" optional="true">
+        <name>android.hardware.contexthub</name>
+        <version>1.2</version>
+        <interface>
+            <name>IContexthub</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <!-- Android 17 framework matrices list only the AIDL version; the framework still has a HIDL client. -->
+    <hal format="hidl" optional="true">
+        <name>android.hardware.health</name>
+        <version>2.1</version>
+        <interface>
+            <name>IHealth</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
 </compatibility-matrix>
