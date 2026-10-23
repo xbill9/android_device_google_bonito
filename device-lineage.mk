@@ -82,3 +82,7 @@ PRODUCT_PACKAGES += \
 
 # Properties
 TARGET_VENDOR_PROP := $(LOCAL_PATH)/vendor.prop
+
+# Android 17 enforces Treble app labeling for board API 202604 and later. The 2019 vendor partition
+# labels Qualcomm and Google platform apps in vendor policy; report those as warnings.
+PRODUCT_ENFORCE_SELINUX_TREBLE_LABELING := false
