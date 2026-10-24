@@ -48,6 +48,10 @@ PRODUCT_PACKAGES += \
 
 $(call soong_config_set_bool,livedisplay_sdm,enable_dm,false)
 
+# Graphics: the sdm845 display stack only provides IMapper 2.x/3.0, which
+# libui drops on API 36+ unless built with LEGACY_GRALLOC.
+$(call soong_config_set_bool,libui,legacy_gralloc,true)
+
 # Parts
 PRODUCT_PACKAGES += \
     GoogleParts
