@@ -12,3 +12,6 @@ set_prop(hal_usb_gadget_impl, vendor_usb_prop)
 allow hal_usb_gadget_impl sysfs_batteryinfo:dir r_dir_perms;
 allow hal_usb_gadget_impl sysfs_batteryinfo:file rw_file_perms;
 allow hal_usb_gadget_impl sysfs_extcon:dir search;
+
+# The gadget HAL reads the USB config that hal_usb_impl sets
+get_prop(hal_usb_gadget_impl, vendor_usb_config_prop)

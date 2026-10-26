@@ -29,6 +29,7 @@ allow hal_neuralnetworks_server ion_device:chr_file r_file_perms;
 allow hal_omx_server ion_device:chr_file rw_file_perms;
 allow mediaserver ion_device:chr_file r_file_perms;
 allow rs ion_device:chr_file r_file_perms;
+allow hal_sensors_default ion_device:chr_file r_file_perms;
 allow shell ion_device:chr_file rw_file_perms;
 allow surfaceflinger ion_device:chr_file r_file_perms;
 allow system_server ion_device:chr_file r_file_perms;
