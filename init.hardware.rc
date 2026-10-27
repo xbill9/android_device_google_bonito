@@ -759,6 +759,12 @@ service init-fingerprint-sh /vendor/bin/init.fingerprint.sh 10
 on property:sys.boot_completed=1
     start init-fingerprint-sh
 
+# The sensor DSP firmware rejects libchre_slpi_skel.so (undefined __sensors_island_start), so
+# chre_daemon_msm exits about every 5 s and init restarts it. Its only user, Active Edge, is not
+# built. Stop it once booted; "start vendor.chre" brings it back.
+on property:sys.boot_completed=1
+    stop vendor.chre
+
 on property:vendor.fps.init.succeed=true && property:init.svc.vendor.fps_hal=stopped
     start init-fingerprint-sh
 
