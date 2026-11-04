@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<!--
+    Device carrier config overrides, read after the carrier's own config.
+
+    Google Fi on T-Mobile (310260, IMSI prefix 31026097): stock Pixels get
+    VoLTE from Google's CarrierSettings. With carrier_volte_available_bool
+    false, Android switches IMS off in the modem, the modem gives up LTE, and
+    with no 3G left on T-Mobile the phone loses service a few seconds after
+    attach (data-only SIMs included).
+-->
+<carrier_config_list>
+    <carrier_config mcc="310" mnc="260" imsi="31026097.*">
+        <boolean name="carrier_volte_available_bool" value="true" />
+    </carrier_config>
+</carrier_config_list>
