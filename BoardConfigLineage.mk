@@ -37,9 +37,13 @@ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 
 # Reserve space for gapps install
 -include vendor/lineage/config/BoardConfigReservedSize.mk
+# None when Google apps are built in (vendor/gapps, see lineage_sargo.mk): with the reserve
+# product + system + system_ext + vendor exceed super by 658 MiB.
 ifneq ($(WITH_GMS),true)
+ifeq ($(wildcard vendor/gapps/arm64/arm64-vendor.mk),)
 # 900 MiB: Android 16 images no longer fit super with the 1000 MiB reserve
 BOARD_PRODUCTIMAGE_PARTITION_RESERVED_SIZE := 943718400
+endif
 endif
 
 # SELinux
