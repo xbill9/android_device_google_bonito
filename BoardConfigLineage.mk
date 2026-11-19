@@ -35,13 +35,9 @@ ifneq ($(PRODUCT_USE_DYNAMIC_PARTITIONS), true)
 endif
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 
-# Reserve space for a gapps install, none when Google apps are built in (vendor/gapps, see
-# lineage_sargo.mk): with a reserve, product + system + system_ext + vendor exceed super.
-ifneq ($(wildcard vendor/gapps/arm64/arm64-vendor.mk),)
-WITHOUT_RESERVED_SIZE := true
-endif
+# Reserve space for gapps install
 -include vendor/lineage/config/BoardConfigReservedSize.mk
-ifeq (,$(filter true,$(WITHOUT_RESERVED_SIZE) $(WITH_GMS)))
+ifneq ($(WITH_GMS),true)
 # 900 MiB: Android 16 images no longer fit super with the 1000 MiB reserve
 BOARD_PRODUCTIMAGE_PARTITION_RESERVED_SIZE := 943718400
 endif

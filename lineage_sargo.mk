@@ -27,7 +27,3 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
     DeviceProduct=sargo
 
 $(call inherit-product, vendor/google/sargo/sargo-vendor.mk)
-
-# Google apps built in (MindTheGapps, vendor/gapps in the local manifest), so an install needs
-# no GApps sideload in recovery.
-$(call inherit-product-if-exists, vendor/gapps/arm64/arm64-vendor.mk)
