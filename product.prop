@@ -46,6 +46,10 @@ telephony.lteOnCdmaDevice=1
 # Simulate sdcard on /data/media
 persist.fuse_sdcard=true
 
+# FUSE passthrough: MediaProvider hands file reads and writes to the kernel (the kernel's
+# Android passthrough interface, kernel commit "ANDROID: fuse: Android passthrough interface")
+persist.sys.fuse.passthrough.enable=true
+
 # settings to enable Device Orientation Sensors
 ro.qti.sensors.dev_ori=true
 
